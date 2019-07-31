@@ -19,10 +19,7 @@ let constant;
 const bX = 10;
 let bY = 150;
 
-const gravity = 1;
-
-
-const audioName = new Audio();
+const gravity = 1.5; 
 
 const pipe = [];
 pipe[0] = {
@@ -32,16 +29,34 @@ pipe[0] = {
 
 
 const moveUp = () => {
-    bY-= 20;
+    bY-= 25;
 };
 
-document.addEventListener('keydown', moveUp)
+document.addEventListener('keydown', moveUp);
 
 const draw = () => {
     ctx.drawImage(bg, 0, 0);
+
+    for (let i = 0; i < pipe.length; i++){
+        ctx.drawImage(pipeNorth, pipe[i].x, pipe[i].y);
+        ctx.drawImage(pipeSouth, pipe[i].x, pipe[i].y + constant);
+
+        pipe[i].x--;
+
+        if(pipe[i].x === 125){
+            pipe.push({
+                x: cvs.width,
+                y: Math.floor(Math.random() * pipeNorth.height)- pipeNorth.height
+            });
+        }
+
+        if(bX + flappyBird.width >= pipe[i].x && bX <= pipe[i].x + pipeNorth.width && 
+            (bY <= pipe[i].y + pipeNorth.height || bY + flappyBird.height >= pipe[i].y+constant) || 
+            bY + flappyBird.height >=  cvs.height - fg.height) {
+            location.reload( )
+        }
+    }
     constant = pipeNorth.height + gap;
-    ctx.drawImage(pipeNorth, 100, 0);
-    ctx.drawImage(pipeSouth, 100, 0 + constant);
 
     ctx.drawImage(fg, 0, cvs.height - fg.height);
     ctx.drawImage(flappyBird, bX, bY);
