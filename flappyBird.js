@@ -22,7 +22,7 @@ let bY = 150;
 const gravity = 1.5;
 
 let score = 0;
-let highScore = 0;
+let highScore = localStorage.getItem('highScore') || 0;
 
 const fly = new Audio();
 const scor = new Audio();
@@ -72,7 +72,8 @@ const draw = () => {
 
         if (score > highScore){
             highScore = score;
-        }
+            localStorage.setItem('highScore', highScore)
+    }
     }
     constant = pipeNorth.height + gap;
 
