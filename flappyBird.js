@@ -1,5 +1,6 @@
 const cvs = document.getElementById('canvas');
 const ctx = cvs.getContext('2d');
+const button = document.querySelector('button');
 
 const flappyBird = new Image();
 const bg = new Image();
@@ -19,7 +20,7 @@ let constant;
 const bX = 10;
 let bY = 150;
 
-const gravity = 1.5;
+const gravity = 1.7;
 
 let score = 0;
 let highScore = localStorage.getItem('highScore') || 0;
@@ -37,11 +38,28 @@ pipe[0] = {
 };
 
 const moveUp = () => {
-  bY -= 25.5;
+  bY -= 27.5;
   fly.play();
 };
 
 document.addEventListener('keydown', moveUp);
+
+let paused = true;
+
+function togglePause()
+{
+    if (!paused)
+    {
+    paused = true;
+    console.log(paused)
+    } else if (paused)
+    {
+       paused= false;
+       console.log(paused)
+    }
+}
+
+button.addEventListener('click', () => togglePause());
 
 const draw = () => {
   ctx.drawImage(bg, 0, 0);
@@ -88,5 +106,8 @@ const draw = () => {
 
     requestAnimationFrame(draw);
 }
+
+const buttonClick = () => alert('click');
+
 
 draw();
